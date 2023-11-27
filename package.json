@@ -3,5 +3,11 @@
     "private": true,
     "version": "1.0.0",
     "type": "module",
-    "scripts": {}
+    "scripts": {
+        "start": "lerna run start"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "lerna": "^8.0.0"
+    }
 }
