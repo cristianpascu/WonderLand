@@ -1,4 +1,4 @@
-import { expect, describe, it, vi } from "vitest";
+import { expect, describe, it } from "vitest";
 import { Rectangle } from "./Rectangle";
 
 import { render, screen } from "./test/utils";

@@ -7,34 +7,34 @@ import {
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-export interface StripeState {
+export interface ExampleState {
     root: {};
 }
 
-const initialState: StripeState = {
+const initialState: ExampleState = {
     root: {},
 };
 
-const stripeSlice = createSlice({
-    name: "stripe",
+const exampleSlice = createSlice({
+    name: "example",
     initialState,
     reducers: {},
 });
 
-export const {} = stripeSlice.actions;
-export const stripeReducer = stripeSlice.reducer;
+export const {} = exampleSlice.actions;
+const exampleReducer = exampleSlice.reducer;
 
-const rootReducer = combineReducers({
-    stripe: stripeReducer,
+const RootReducer = combineReducers({
+    example: exampleReducer,
 });
 
-export type ApplicationState = ReturnType<typeof rootReducer>;
+export type ApplicationState = ReturnType<typeof RootReducer>;
 
 export const setupStore = (
     preloadedState?: PreloadedState<ApplicationState>
 ) => {
     return configureStore({
-        reducer: rootReducer,
+        reducer: RootReducer,
         preloadedState,
     });
 };

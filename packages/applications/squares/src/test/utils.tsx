@@ -1,8 +1,6 @@
 import { cleanup, render } from "@testing-library/react";
 import { afterEach } from "vitest";
 
-import { squareReducer, ApplicationState, AppStore } from "../store";
-
 import React, { PropsWithChildren } from "react";
 import type { RenderOptions } from "@testing-library/react";
 import { configureStore } from "@reduxjs/toolkit";
@@ -12,6 +10,8 @@ import { Provider } from "react-redux";
 // eslint-disable-next-line react-refresh/only-export-components
 export * from "@testing-library/react";
 export { default as userEvent } from "@testing-library/user-event";
+
+import { squareReducer, ApplicationState, AppStore } from "../store";
 
 afterEach(() => {
     cleanup();

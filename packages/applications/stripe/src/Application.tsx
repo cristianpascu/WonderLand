@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "./store";
 
 export const Application = () => {
     const {} = useAppSelector((state) => state);
+
     useAppDispatch();
 
     return (

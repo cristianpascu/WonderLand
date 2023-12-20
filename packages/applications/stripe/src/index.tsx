@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
 import { setupStore } from "./store";
-import { Provider } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
 
 import { Application } from "./Application.tsx";
 
@@ -12,8 +12,8 @@ const store = setupStore();
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <Provider store={store}>
+        <StoreProvider store={store}>
             <Application />
-        </Provider>
+        </StoreProvider>
     </StrictMode>
 );
