@@ -1,5 +1,5 @@
 {
-    "name": "squares",
+    "name": "@wonderland/squares",
     "private": true,
     "version": "1.0.0",
     "description": "A simple application that breaks some squares",
@@ -16,6 +16,7 @@
     "dependencies": {
         "@emotion/react": "^11.11.1",
         "@react-spring/web": "^9.7.3",
+        "@wonderland/wonderact": "*",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "styled-components": "^6.1.1"
