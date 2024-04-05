@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+        "downlevelIteration": true,
+
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "strictBindCallApply": true,
+        "forceConsistentCasingInFileNames": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+
+        /* Ouput and imports */
+        "outDir": "dist",
+        "baseUrl": ".",
+        "rootDir": "src",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    },
+
+    "include": ["./src"],
+    "exclude": ["node_modules"],
+
+    "references": [
+        { "path": "../../libraries/common" },
+        { "path": "../../libraries/domain" },
+    ],
+}

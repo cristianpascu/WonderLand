@@ -1,19 +1,45 @@
 {
-    "name": "wonderland",
+    "name": "streamtrader",
     "private": true,
     "version": "1.0.0",
-    "type": "module",
+    "description": "",
     "scripts": {
-        "start": "lerna run start"
+        "format": "prettier --write \"packages/**/*.ts(x)\"",
+        "lint": "eslint \"./packages/**/*.{ts,tsx}\" --fix",
+        "build": "lerna run build",
+        "build:server": "lerna run build:server",
+        "start:dev": "lerna run start:dev --stream --parallel",
+        "start:prod": "lerna run start:prod --stream --parallel",
+        "start:dev:prod": "dotenvx run --env-file=./.env.production -- lerna run start:dev --stream --parallel",
+        "prisma:generate": "dotenvx run --env-file=./.env.dev -- lerna run prisma:generate",
+        "prisma:push": "dotenvx run --env-file=./.env.dev -- lerna run prisma:push",
+        "prisma:studio": "dotenvx run --env-file=./.env.dev -- lerna run prisma:studio",
+        "prisma:prod:push": "dotenvx run --env-file=./.env.production -- lerna run prisma:push",
+        "prisma:prod:studio": "dotenvx run --env-file=./.env.production -- lerna run prisma:studio",
+        "db:dev:migrate": "dotenvx run --env-file=./.env.dev -- lerna run db:scripts:migrate",
+        "db:prod:migrate": "dotenvx run --env-file=./.env.production -- lerna run db:scripts:migrate"
     },
     "workspaces": [
-        "packages/applications/metronome",
-        "packages/applications/squares",
-        "packages/applications/wonderback",
-        "packages/libraries/wonderact"
+        "packages/clients/wonder",
+        "packages/libraries/common",
+        "packages/libraries/domain",
+        "packages/services/wonderback"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "@typescript-eslint/parser": "^6.0.0",
+        "eslint": "^8.42.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "lerna": "^8.0.0",
+        "prettier": "^3.0.0"
+    },
+    "engines": {
+        "node": "21.x"
+    },
     "devDependencies": {
-        "lerna": "^8.0.0"
+        "@dotenvx/dotenvx": "^0.28.0"
     }
 }

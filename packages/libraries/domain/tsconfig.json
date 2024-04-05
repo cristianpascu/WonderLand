@@ -1,0 +1,33 @@
+{
+    "extends": "../../../tsconfig.json",
+    "compilerOptions": {
+        /* Basic Options */
+        "target": "ES6",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+        /* Strict Type-Checking Options */
+        "strict": true,
+
+        /* Module Resolution Options */
+        "esModuleInterop": true,
+
+        /* Advanced Options */
+        "forceConsistentCasingInFileNames": true,
+
+        /* Basic Options */
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "composite": true,
+        "outDir": "dist",
+        "rootDir": "src",
+        "jsx": "react",
+
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    },
+    "references": [{ "path": "../../libraries/common" }],
+    "include": ["./src"],
+    "exclude": ["node_modules"],
+}

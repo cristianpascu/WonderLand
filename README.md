@@ -1,12 +1,27 @@
-# WonderLand Applications
-
-A monorepo with different stuff created at different times.
 
 
-## Database
+### Adding React Router
 
-Connect to the container:
-```docker exec -it wonderland-db-1 /bin/bash```
+```
+npm install --save-dev react-router-dom localforage match-sorter sort-by
+```
 
-Connect to the database:
-```psql -d WONDERLAND -U wonderland -W```
+```
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+```

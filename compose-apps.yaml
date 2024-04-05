@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+    # Web Applications
+    tradingwebapp:
+        restart: always
+        depends_on:
+            - trading
+        build:
+            dockerfile: ./packages/infra/docker/client.Dockerfile
+            args:
+                APP_PATH: clients/trading
+    dashboardwebapp:
+        restart: always
+        build:
+            dockerfile: ./packages/infra/docker/client.Dockerfile
+            args:
+                APP_PATH: clients/dashboard
+
+    # APIs
+    trading:
+        build:
+            dockerfile: ./packages/infra/docker/service.Dockerfile
+            args:
+                APP_PATH: services/trading
+        depends_on:
+            - postgres
+            - mongo
+            - redis
+
+        develop:
+            watch:
+                - path: ./packages/services/trading/src
+                  target: /app/packages/services/trading/src
+                  action: sync
+
+        # Infrastructure
+    reverse-proxy:
+        depends_on:
+            - mongo_express
+            - adminer
+            - redis
+        restart: always
+        extends:
+            service: reverse-proxy
+            file: ./packages/infra/proxies/docker-compose.yaml
