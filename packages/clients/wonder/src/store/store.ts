@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Base from './features/base.slice.js';
 import Auth from './features/auth.slice.js';
+import OpenAI from './features/openai.slice.js';
 
 // Combine reducers into a root reducer
 
@@ -16,6 +17,8 @@ const apiSlices = [Base.ApiSlice];
 const rootReducer = combineSlices(
     Auth.Slice,
     Auth.ApiSlice,
+    OpenAI.Slice,
+    OpenAI.ApiSlice,
     ...slices,
     ...apiSlices,
 );
@@ -30,7 +33,10 @@ export const setupStore = (preloadedState?: Partial<ApplicationState>) => {
     return configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) => {
-            return getDefaultMiddleware().concat(Auth.ApiSlice.middleware);
+            return getDefaultMiddleware().concat(
+                Auth.ApiSlice.middleware,
+                OpenAI.ApiSlice.middleware,
+            );
         },
         preloadedState,
     });

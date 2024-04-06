@@ -9,9 +9,8 @@ import {
     ListItemText,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import QueueMusic from '@mui/icons-material/QueueMusic';
-import LibraryMusic from '@mui/icons-material/LibraryMusic';
-import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import CodeIcon from '@mui/icons-material/Code';
+import HomeIcon from '@mui/icons-material/Home';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 export const Sidebar = () => {
@@ -25,21 +24,15 @@ export const Sidebar = () => {
             <List className="h-full flex flex-col">
                 {[
                     {
-                        path: '/playlists',
-                        title: 'Playlists',
-                        icon: <QueueMusic className="text-white" />,
+                        path: '/',
+                        title: 'Home',
+                        icon: <HomeIcon className="text-white" />,
                     },
                     {
-                        path: '/songs',
-                        title: 'Song Catalog',
-                        icon: <LibraryMusic className="text-white" />,
+                        path: '/editor',
+                        title: 'VS Code',
+                        icon: <CodeIcon className="text-white" />,
                     },
-                    {
-                        path: '/submissions',
-                        title: 'Submissions',
-                        icon: <CurrencyExchangeIcon className="text-white" />,
-                    },
-                    // { path: '/spotify', title: 'Spotify' },
                 ].map((text, index) => (
                     <ListItem key={index} disablePadding>
                         <ListItemButton>
@@ -82,7 +75,6 @@ export const Sidebar = () => {
                             onClick={() => {
                                 SignOut().then(async () => {
                                     resetCache();
-                                    window.location.replace('/');
                                 });
                             }}
                         />

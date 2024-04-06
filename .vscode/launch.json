@@ -10,7 +10,7 @@
             "name": "Trading",
             "skipFiles": ["<node_internals>/**"],
             "address": "localhost",
-            "port": 9339,
+            "port": 9449,
             "outFiles": ["${workspaceFolder}/**/*.js"]
         }
     ]

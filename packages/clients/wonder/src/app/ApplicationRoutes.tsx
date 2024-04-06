@@ -5,6 +5,7 @@ import { SignInPage } from '../pages/SignInPage';
 import { SignUpPage } from '../pages/SignUpPage';
 import { FC, PropsWithChildren } from 'react';
 import { useApplicationSelector } from '@/store/store';
+import { MonacoEditorPage } from '@/pages/MonacoEditorPage';
 
 const RequireAuthentication: FC<PropsWithChildren> = ({ children }) => {
     const user = useApplicationSelector((state) => state.Auth.user);
@@ -27,7 +28,9 @@ export const ApplicationRoutes = () => {
                         <ApplicationLayout />
                     </RequireAuthentication>
                 }
-            ></Route>
+            >
+                <Route path="/editor" element={<MonacoEditorPage />} />
+            </Route>
         </Routes>
     );
 };

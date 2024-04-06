@@ -7,10 +7,8 @@ export const InProductionLikeACTO =
 type IConfig = {
     databaseURL: string;
 
-    spotifyClientId: string;
-    spotifyClientSecret: string;
-
     sendGridApiKey: string;
+    openAiApiKey: string;
 };
 
 @Injectable()
@@ -20,26 +18,17 @@ export class ConfigService {
     constructor() {
         const {
             DATABASE_URL: databaseURL,
-            SPOTIFY_CLIENT_ID: spotifyClientId,
-            SPOTIFY_CLIENT_SECRET: spotifyClientSecret,
             SENDGRID_API_KEY: sendGridApiKey,
+            OPENAI_API_KEY: openAiApiKey,
         } = process.env;
 
-        if (
-            !(
-                databaseURL &&
-                spotifyClientId &&
-                spotifyClientSecret &&
-                sendGridApiKey
-            )
-        )
+        if (!(databaseURL && sendGridApiKey && openAiApiKey))
             throw new Error('Some of the configuration variables are not set');
 
         this.configuration = {
             databaseURL,
-            spotifyClientId,
-            spotifyClientSecret,
             sendGridApiKey,
+            openAiApiKey,
         };
     }
 
