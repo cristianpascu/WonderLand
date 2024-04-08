@@ -31,6 +31,18 @@ export class UserQueries {
         return u;
     }
 
+    async updateUserPassword(id: UUID, password: string): Promise<boolean> {
+        const u: Users = await this.client.users.update({
+            where: {
+                id,
+            },
+            data: {
+                password,
+            },
+        });
+        return !!u;
+    }
+
     async validateUserCredential(
         email: string,
         compare: (password: string) => Promise<boolean>,

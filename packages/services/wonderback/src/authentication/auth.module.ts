@@ -6,6 +6,7 @@ import { AuthenticationService } from './auth.service.js';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy.js';
 import { SessionSerializer } from './session.serializer.js';
+import { SendGridService } from '../sendgrid.service.js';
 
 @Module({
     imports: [PassportModule.register({ session: true })],
@@ -15,6 +16,7 @@ import { SessionSerializer } from './session.serializer.js';
         AuthenticationService,
         ConfigService,
         QueryService,
+        SendGridService,
         LocalStrategy,
         SessionSerializer,
     ],

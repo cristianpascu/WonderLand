@@ -3,6 +3,10 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery, post } from '@/store/baseQuery';
 import {
     ApplicationInitializationData,
+    AuthenticationForgotPasswordRequest,
+    AuthenticationForgotPasswordResponse,
+    AuthenticationResetPasswordRequest,
+    AuthenticationResetPasswordResponse,
     AuthenticationRoutes,
     AuthenticationSignInRequest,
     AuthenticationSignInResponse,
@@ -42,6 +46,20 @@ const ApiSlice = createApi({
         >({
             query: post(AuthenticationRoutes.SignOut),
         }),
+
+        ForgotPassword: build.mutation<
+            AuthenticationForgotPasswordResponse,
+            AuthenticationForgotPasswordRequest
+        >({
+            query: post(AuthenticationRoutes.ForgotPassword),
+        }),
+
+        ResetPassword: build.mutation<
+            AuthenticationResetPasswordResponse,
+            AuthenticationResetPasswordRequest
+        >({
+            query: post(AuthenticationRoutes.ResetPassword),
+        }),
     }),
 });
 
@@ -73,8 +91,13 @@ const Slice = createSlice({
     },
 });
 
-export const { useSignInMutation, useSignUpMutation, useSignOutMutation } =
-    ApiSlice;
+export const {
+    useSignInMutation,
+    useSignUpMutation,
+    useSignOutMutation,
+    useResetPasswordMutation,
+    useForgotPasswordMutation,
+} = ApiSlice;
 
 export default {
     Slice,

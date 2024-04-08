@@ -6,6 +6,8 @@ export const AuthenticationRoutes = {
     SignIn: 'signin',
     SignUp: 'signup',
     SignOut: 'signout',
+    ForgotPassword: 'forgot/password',
+    ResetPassword: 'reset/password',
 };
 
 export type AppRequest = void;
@@ -25,3 +27,21 @@ export type AuthenticationSignInResponse = ApplicationInitializationData | void;
 
 export type AuthenticationSignOutRequest = void;
 export type AuthenticationSignOutResponse = void;
+
+export type AuthenticationForgotPasswordRequest = { email: string };
+export type AuthenticationForgotPasswordResponse = {
+    success: boolean;
+    reason?: string;
+    message?: string;
+};
+
+export type AuthenticationResetPasswordRequest = {
+    email: string;
+    password: string;
+    link: string;
+};
+export type AuthenticationResetPasswordResponse = {
+    success: boolean;
+    reason?: string;
+    message?: string;
+};

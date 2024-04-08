@@ -23,7 +23,7 @@ export class SendGridService {
                 template,
             } = params;
             await sgMail.send({
-                from: 'Alexandru Antonescu <info@playlistool.com>',
+                from: 'Cristian Pascu <cristian@wonderland.com>',
                 to: `${name} <${email}>`,
                 subject,
                 ...template,
@@ -31,5 +31,33 @@ export class SendGridService {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async sendResetPasswordEmail(params: {
+        user: UserWithoutPassword;
+        link: string;
+    }) {
+        const { user, link } = params;
+
+        const template = `Hello, ${user.name},
+                
+                You have requested to reset your password. 
+
+                Do so by clicking on this link: <a href="${link}">Reset Password</a>.
+
+                If you haven't requested a password reset, you can safely ignore this email.
+
+                Regards,
+                Playlistool Team
+            `;
+
+        this.sendEmailToUser({
+            user,
+            subject: `Reset your password`,
+            template: {
+                text: template,
+                html: template.replace(/\n/gi, '<br/>'),
+            },
+        });
     }
 }

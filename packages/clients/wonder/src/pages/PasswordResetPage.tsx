@@ -1,25 +1,35 @@
-import { useSignInMutation } from '@/store/features/auth.slice';
+import { useResetPasswordMutation } from '@/store/features/auth.slice';
 import { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 
-export const SignInPage: React.FC = () => {
-    const location = useLocation();
+export const PasswordResetPage: React.FC = () => {
+    const [user, setUser] = useState({
+        email: '',
+        password: '',
+        confirmPassword: '',
+    });
 
-    const from = location.state?.from?.pathname || '/';
+    const { link = 'invalid' } = useParams<{
+        link: string;
+    }>();
 
-    const [user, setUser] = useState({ email: '', password: '' });
-
-    const [SignIn, { isSuccess, isError, error }] = useSignInMutation();
+    const [ResetPassword, { isSuccess }] = useResetPasswordMutation();
 
     if (isSuccess) {
-        return <Navigate to={from} />;
+        return <Navigate to="/signin" />;
     }
 
-    type TypeError = { status: number; data: { message: string } } | undefined;
-    let err: TypeError = undefined;
-    if (isError && error) {
-        err = error as TypeError;
-    }
+    const submitSignUp = () => {
+        if (!user.password || user.password != user.confirmPassword) {
+            return;
+        }
+        const { password, email } = user;
+        ResetPassword({
+            email,
+            password,
+            link,
+        });
+    };
 
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
@@ -38,19 +48,13 @@ export const SignInPage: React.FC = () => {
                 <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                            Sign in to your account
+                            Create an account
                         </h1>
-
-                        {isError && error && <div>{err?.data.message}</div>}
                         <form
                             className="space-y-4 md:space-y-6"
-                            onSubmit={async (event) => {
+                            onSubmit={(event) => {
                                 event.preventDefault();
-                                try {
-                                    await SignIn(user);
-                                } catch (error) {
-                                    console.log(error);
-                                }
+                                submitSignUp();
                                 return false;
                             }}
                         >
@@ -77,12 +81,13 @@ export const SignInPage: React.FC = () => {
                                     required
                                 ></input>
                             </div>
+
                             <div>
                                 <label
                                     htmlFor="password"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Password
+                                    New Password
                                 </label>
                                 <input
                                     type="password"
@@ -100,29 +105,35 @@ export const SignInPage: React.FC = () => {
                                     required
                                 ></input>
                             </div>
-                            <div className="flex items-center justify-between">
-                                <a
-                                    href="/forgot/password"
-                                    className="text-sm font-medium text-green-600 hover:underline dark:text-green-500"
+                            <div>
+                                <label
+                                    htmlFor="confirm-password"
+                                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Forgot password?
-                                </a>
+                                    Confirm password
+                                </label>
+                                <input
+                                    type="password"
+                                    name="confirm-password"
+                                    id="confirm-password"
+                                    value={user.confirmPassword}
+                                    onChange={(event) =>
+                                        setUser({
+                                            ...user,
+                                            confirmPassword: event.target.value,
+                                        })
+                                    }
+                                    placeholder="••••••••"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-green-600 focus:border-green-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    required
+                                ></input>
                             </div>
                             <button
                                 type="submit"
                                 className="w-full text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                             >
-                                Sign in
+                                Update Password
                             </button>
-                            <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                Don’t have an account yet?{' '}
-                                <a
-                                    href="/signup"
-                                    className="font-medium text-green-600 hover:underline dark:text-green-500"
-                                >
-                                    Sign up
-                                </a>
-                            </p>
                         </form>
                     </div>
                 </div>

@@ -10,11 +10,19 @@ import {
     AuthenticationSignUpResponse,
     AuthenticationSignInRequest,
     AuthenticationSignInResponse,
+    AuthenticationForgotPasswordRequest,
+    AuthenticationForgotPasswordResponse,
+    AuthenticationResetPasswordRequest,
+    AuthenticationResetPasswordResponse,
 } from '@wonderland/common';
+import { SendGridService } from '../sendgrid.service.js';
 
 @Controller(AuthenticationRoutes.$)
 export class AuthenticationController {
-    constructor(private readonly client: AuthenticationService) {}
+    constructor(
+        private readonly authenticationService: AuthenticationService,
+        private readonly sendgrid: SendGridService,
+    ) {}
 
     @Post(AuthenticationRoutes.SignIn)
     @Public()
@@ -26,7 +34,8 @@ export class AuthenticationController {
         if (!user) {
             return;
         }
-        const data = await this.client.getInitializationData(user);
+        const data =
+            await this.authenticationService.getInitializationData(user);
         return data;
     }
 
@@ -37,12 +46,41 @@ export class AuthenticationController {
         req: Request<AuthenticationSignUpRequest>,
     ): Promise<AuthenticationSignUpResponse> {
         const { email, password, name } = req.body;
-        return await this.client.createUser({ email, password, name });
+        return await this.authenticationService.createUser({
+            email,
+            password,
+            name,
+        });
     }
 
     @Post(AuthenticationRoutes.SignOut)
     async SignOut(@Req() request: Request) {
         await request.session.destroy(() => {});
         return { success: true };
+    }
+
+    @Public()
+    @Post(AuthenticationRoutes.ForgotPassword)
+    async ForgotPassword(
+        @Req() req: Request<AuthenticationForgotPasswordRequest>,
+    ): Promise<AuthenticationForgotPasswordResponse> {
+        const { email } = req.body;
+        const result =
+            await this.authenticationService.sendResetPasswordEmail(email);
+        return result;
+    }
+
+    @Public()
+    @Post(AuthenticationRoutes.ResetPassword)
+    async ResetPassword(
+        @Req() req: Request<AuthenticationResetPasswordRequest>,
+    ): Promise<AuthenticationResetPasswordResponse> {
+        const { email, password, link } = req.body;
+        const result = await this.authenticationService.resetPassword(
+            email,
+            password,
+            link,
+        );
+        return result;
     }
 }
