@@ -23,6 +23,7 @@ import { CacheService } from './cache.service.js';
 import { AuthenticatedGuard } from './authentication/auth.guard.js';
 import { SendGridService } from './sendgrid.service.js';
 import { OpenAiModule } from './openai/openai.module.js';
+import { EventsModule } from './events/events.module.js';
 
 const ProductionModules = [];
 if (InProductionLikeABoss) {
@@ -44,18 +45,19 @@ if (InProductionLikeABoss) {
 }
 @Module({
     imports: [
-        AuthenticationModule,
         AccountsModule,
-        ScheduleModule.forRoot(),
-        RedisModule,
+        AuthenticationModule,
+        EventsModule,
         OpenAiModule,
+        RedisModule,
+        ScheduleModule.forRoot(),
     ].concat(ProductionModules),
     controllers: [ApplicationController],
     providers: [
         ApplicationService,
+        CacheService,
         ConfigService,
         QueryService,
-        CacheService,
         SendGridService,
         {
             provide: APP_GUARD,
